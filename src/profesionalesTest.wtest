@@ -1,0 +1,38 @@
+import profesionales.*
+import empresa.*
+
+//UNIVERSIDADES
+const unsam = new Universidad(provincia ="Buenos Aires", honorarios= 3500)
+const uniRosario = new Universidad(provincia ="Santa Fe", honorarios= 2800)
+const uniCorrientes = new Universidad(provincia ="Corrientes", honorarios= 4200)
+const unaHur = new Universidad(provincia ="Buenos Aires", honorarios= 8800)
+
+
+//PROFESIONALES
+const juana = new ProfesionalVinculado(universidad = uniRosario)
+const melina = new ProfesionalAsociado(universidad = uniCorrientes)
+const rocio = new ProfesionalLibre(universidad = unaHur, provinciasDondePuedeTrabajar = #{"Santa Fe","Córdoba","Buenos Aires"}, honorariosPorHora = 5000)
+const luciana = new ProfesionalLibre(universidad = uniRosario, provinciasDondePuedeTrabajar = #{"Santa Fe","Entre Rios"}, honorariosPorHora = 3200) 
+
+
+//EMPRESA
+const empresa1 = new EmpresaDeServicios(profesionales = [juana, melina, rocio, luciana], honorarios = 3500)
+
+
+//TESTS
+
+test "Ningun profesional contratado estudio en la universidad de San Martin"{
+	assert.equals(0,empresa1.cuantosEstudiaronEn(unsam))
+}
+
+test "como profesional caro solo esta Rocio"{
+	assert.equals([rocio],empresa1.profesionalesCaros())
+}
+
+test "las universidades formadoras en esta empresa son la universidad de Rosario, la de Corrintes y la de Hurlingham"{
+	assert.equals(#{uniRosario, uniCorrientes, unaHur},empresa1.universidadesFormadoras())
+}
+
+test "el profesional mas barato es Juana"{
+	assert.equals(juana,empresa1.profesionalBarato())
+}
